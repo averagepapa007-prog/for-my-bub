@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Happy Rose Day</title>
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  height:100vh;
+  overflow:hidden;
+  background:linear-gradient(135deg,#ffd1dc,#ffe6f0);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.lilies{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:0.15;
+  font-size:48px;
+}
+.lilies::before{
+  content:"🌸 🌸 🌸 🌸 🌸";
+  position:absolute;
+  top:8%;
+  left:5%;
+}
+.lilies::after{
+  content:"🌸 🌸 🌸 🌸";
+  position:absolute;
+  bottom:10%;
+  right:5%;
+}
+.tap{
+  background:white;
+  padding:26px;
+  border-radius:20px;
+  text-align:center;
+  font-size:1.3em;
+  box-shadow:0 12px 30px rgba(0,0,0,0.25);
+  cursor:pointer;
+  animation:pulse 1.6s infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.06)}
+  100%{transform:scale(1)}
+}
+.card{
+  display:none;
+  background:white;
+  padding:32px;
+  border-radius:22px;
+  max-width:420px;
+  text-align:center;
+  box-shadow:0 15px 35px rgba(0,0,0,0.3);
+}
+h1{color:#e63946}
+p{font-size:1.1em;line-height:1.6}
+.signature{margin-top:18px;font-style:italic;font-weight:600}
+.petal{
+  position:fixed;
+  top:-40px;
+  font-size:24px;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg)}
+}
+</style>
+</head>
+<body>
+
+<div class="lilies"></div>
+
+<div id="tap" class="tap">💗 Tap to reveal your Rose Day surprise 💗</div>
+
+<div id="card" class="card">
+  <h1>Happy Rose Day 🌹</h1>
+  <p>If I had a flower for every time I thought about you, I’d be walking through a field for an eternity.</p>
+  <p>You make my days brighter, my heart softer, and my life more beautiful just by being you.</p>
+  <p><strong>I love you bub 💗</strong></p>
+  <div class="signature">From Hubby</div>
+</div>
+
+<script>
+const tap=document.getElementById('tap');
+const card=document.getElementById('card');
+
+tap.onclick=()=>{
+  tap.style.display='none';
+  card.style.display='block';
+  startMusic();
+  for(let i=0;i<30;i++){
+    let p=document.createElement('div');
+    p.className='petal';
+    p.innerText='🌹';
+    p.style.left=Math.random()*100+'vw';
+    p.style.animationDuration=(6+Math.random()*6)+'s';
+    document.body.appendChild(p);
+  }
+}
+
+function startMusic(){
+  const ctx=new (window.AudioContext||window.webkitAudioContext)();
+  const o=ctx.createOscillator();
+  const g=ctx.createGain();
+  o.type='sine';
+  o.frequency.value=432;
+  g.gain.value=0.04;
+  o.connect(g).connect(ctx.destination);
+  o.start();
+  setTimeout(()=>o.stop(),12000);
+}
+</script>
+
+</body>
+</html>
